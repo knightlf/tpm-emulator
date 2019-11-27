@@ -1,0 +1,18 @@
+[Unit]
+Description=tcsd
+After=network.target remote-fs.target nss-lookup.target
+After=tpminit.service
+[Service]
+Type=simple
+TimeoutSec=0
+IgnoreSIGPIPE=no
+GuessMainPID=no
+KillMode=process
+ExecStart=/usr/sbin/tcsd -efc /etc/tcsd.conf
+ExecStartPost=/bin/echo "tcsd is starting"
+ExecStop=/usr/bin/killall /usr/sbin/tcsd
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
